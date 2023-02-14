@@ -80,8 +80,9 @@ def run_training(opt):
                 progress_bar.set_description(s)
 
         scheduler.step(valid_loss)
-
-    torch.save(model.state_dict(), 'weights/final.pth')
+    if not os.path.exists(opt.weights_path):
+        os.makedirs(opt.weights_path)
+    torch.save(model.state_dict(), os.path.join(opt.weights_path, "weights.pth"))
 
 
 if __name__ == "__main__":
@@ -91,14 +92,10 @@ if __name__ == "__main__":
     parser.add_argument('--height', type=int, default=50, help='height of the input image')
     parser.add_argument('--width', type=int, default=200, help='width of the input image')
     parser.add_argument('--num_workers', type=int, default=0, help='number of workers in dataloader')
-    parser.add_argument('--num_epochs', type=int, default=300, help='number of epochs')
+    parser.add_argument('--num_epochs', type=int, default=50, help='number of epochs')
     parser.add_argument('--cuda', action='store_true', default=True, help='use cuda')
+    parser.add_argument('--weights_path', type=str, default='weights',
+                        help="the path to the folder where you want to save the weights")
     opt = parser.parse_args()
 
     run_training(opt)
-
-
-
-
-
-

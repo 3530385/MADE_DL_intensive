@@ -10,7 +10,6 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class CaptchaDataset:
     def __init__(self, image_paths, targets, resize=None):
-        # resize = (height, width)
         self.image_paths = image_paths
         self.targets = targets
         self.resize = resize
